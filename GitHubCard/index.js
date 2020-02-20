@@ -43,8 +43,74 @@ const followersArray = [];
     <p>Bio: {users bio}</p>
   </div>
 </div>
-
 */
+
+function followerCard(data) {
+
+  const newCard = document.createElement('div')
+  newCard.classList.add('card')
+
+  const cardImg = document.createElement('img')
+  cardImg.src = data.avatar_url 
+
+  const cardInfo = document.createElement('div')
+  cardInfo.classList.add('card-info')
+
+  const cardName = document.createElement('h3')
+  cardName.classList.add('name')
+  cardName.textContent = data.name
+
+  const cardUsername = document.createElement('p')
+  cardUsername.classList.add('username')
+  cardName.textContent = data.login
+
+  const cardLocation = document.createElement('p')
+  cardLocation.textContent = `Location: ${data.location}`
+
+  const cardProfile = document.createElement('p')
+  cardProfile.textContent = 'Profile: '
+  const cardProfileLink = document.createElement('a')
+  cardProfileLink.setAttribute('href', data.html_url)
+  cardProfileLink.textContent = data.html_url
+
+  const cardFollowers = document.createElement('p')
+  cardFollowers.textContent = `Followers: ${data.followers}`
+
+  const cardFollowing = document.createElement('p')
+  cardFollowing.textContent = `Following: ${data.following}`
+
+  const cardBio = document.createElement('p')
+  cardBio.textContent = `Bio: ${data.bio}`
+
+  newCard.appendChild(cardImg)
+  newCard.appendChild(cardInfo)
+  cardInfo.appendChild(cardName)
+  cardInfo.appendChild(cardUsername)
+  cardInfo.appendChild(cardLocation)
+
+  cardInfo.appendChild(cardProfile)
+  cardProfile.appendChild(cardProfileLink)
+
+  cardInfo.appendChild(cardFollowers)
+  cardInfo.appendChild(cardFollowing)
+  cardInfo.appendChild(cardBio)
+
+  return newCard;
+}
+
+
+const cards = document.querySelector('.cards')
+
+axios.get('https://api.github.com/users/ahaberman25')
+  .then((response) => { 
+    console.log(response.data)
+      let gitCard = followerCard(response.data);
+      cards.appendChild(gitCard)
+  })
+  .catch((err) => { 
+    console.log(err) 
+  })
+
 
 /* List of LS Instructors Github username's: 
   tetondan
